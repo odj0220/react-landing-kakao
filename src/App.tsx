@@ -1,25 +1,51 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import {RecoilRoot, useRecoilValue} from "recoil";
+import {CardCompnent} from "./components/CardComponent";
+import {topCardsState, bottomCardsState} from "./atorms";
 
 function App() {
+  const TopCards = () => {
+    const cards = useRecoilValue(topCardsState);
+    const right = cards.map((card, index) => (
+        <CardCompnent item={card}></CardCompnent>
+    ));
+    return (
+        <div className="section-top-card">
+          <div className="wrap-item">
+
+          </div>
+          <div className="wrap-item">
+            {right}
+          </div>
+        </div>
+    )
+  }
+
+  const BottomCards = () => {
+    const cards = useRecoilValue(bottomCardsState);
+    return (
+        <>
+          {cards.map(card => (
+              <CardCompnent item={card}></CardCompnent>
+          ))}
+        </>
+    )
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RecoilRoot>
+      <div className="App">
+        <header className="App-header">
+
+
+        </header>
+        <main className="App-main">
+          <TopCards />
+        </main>
+      </div>
+    </RecoilRoot>
   );
 }
 
